@@ -1,0 +1,12 @@
+diff --git a/Makefile.PL b/Makefile.PL
+index 9cb81f6..a71efe9 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -236,6 +236,7 @@ my @CC_DEFINE = (
+        '-DSQLITE_ENABLE_STAT4',            # for sqlite >= 3.8.3.1
+        '-DSQLITE_ENABLE_JSON1',            # for sqlite >= 3.9.0
+        '-DSQLITE_ENABLE_FTS5',             # for sqlite >= 3.9.0
++  '-DSQLITE_HAS_CODEC',               # for sqlcipher 
+        '-DNDEBUG=1',
+ );
+

@@ -1,0 +1,12 @@
+diff --git a/Makefile.PL b/Makefile.PL
+index 9cb81f6..4181869 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -222,6 +222,7 @@ unless ( $sqlite_local ) {
+ my @CC_INC = (
+ 	'-I.',
+ 	'-I$(DBI_INSTARCH_DIR)',
++  map {'-Iext/'.$_} qw/async  fts1  fts2  fts3  fts5  icu  misc  rbu rtree  session  userauth/,
+ );
+ if ( $sqlite_inc ) {
+ 	push @CC_INC, "-I$sqlite_inc";
