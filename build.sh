@@ -19,8 +19,10 @@ popd
 rsync -vax DBD-SQLite/* build/
 
 pushd build
-patch -p1 -F10 < ../patches/01-add-sqlcihper-defines.patch
-patch -p1 -F10 < ../patches/02-add-ext-includes.patch
+for patch in ../patches/*.patch; do
+	echo applying $patch
+	patch -p1 -F10 < $patch
+done
 
 # find ./ \( -name MANIFEST -or -iname \*.pm -or -iname \*.pl -or -iname \*.pod -or -iname \*.t \) -exec perl -pi -E 's{DBD(::|-|/)SQLite}{DBD$1SQLcipher}g;' {} +
 #find ./lib -type f -iname \*sqlite\* -exec rename 's/SQLite/SQLcipher/g; s/sqlite/sqlcipher/g;' {} \;

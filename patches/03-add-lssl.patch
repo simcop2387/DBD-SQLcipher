@@ -1,0 +1,15 @@
+diff --git a/Makefile.PL b/Makefile.PL
+index 9cb81f6..662a760 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -304,6 +304,10 @@ if ($^O eq 'solaris' && $Config{gccversion}) {
+ 	push @CCFLAGS, "-std=gnu99";
+ }
+ 
++# TODO make this work on more than just linux.  I'm just assuming it won't work elsewhere
++push @LDDLFLAGS, "-lssl";
++push @LDFLAGS, "-lssl";
++
+ my %CC_OPTIONS = (
+ 	INC          => join( ' ', @CC_INC    ),
+ 	DEFINE       => join( ' ', @CC_DEFINE ),
