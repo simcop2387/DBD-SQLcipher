@@ -1,0 +1,6 @@
+[submodule "DBD-SQLite"]
+	path = DBD-SQLite
+	url = https://github.com/DBD-SQLite/DBD-SQLite
+[submodule "sqlcipher"]
+	path = sqlcipher
+	url = https://github.com/sqlcipher/sqlcipher
