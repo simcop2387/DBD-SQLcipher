@@ -1,0 +1,25 @@
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -599,18 +599,20 @@
+ libsqlcipher.la:	$(LIBOBJ)
+ 	$(LTLINK) -no-undefined -o $@ $(LIBOBJ) $(TLIBS) \
+ 		${ALLOWRELEASE} -rpath "$(libdir)" -version-info "8:6:8"
++	sed -i "/dependency_libs/s/'.*'/''/" $@
+ 
+ libtclsqlite3.la:	tclsqlite.lo libsqlcipher.la
+ 	$(LTLINK) -no-undefined -o $@ tclsqlite.lo \
+-		libsqlcipher.la @TCL_STUB_LIB_SPEC@ $(TLIBS) \
++		libsqlcipher.la @TCL_STUB_LIB_SPEC@ \
+ 		-rpath "$(TCLLIBDIR)" \
+ 		-version-info "8:6:8" \
+ 		-avoid-version
++	sed -i "/dependency_libs/s/'.*'/''/" $@
+ 
+ sqlcipher$(TEXE):	$(TOP)/src/shell.c libsqlcipher.la sqlite3.h
+ 	$(LTLINK) $(READLINE_FLAGS) $(SHELL_OPT) \
+ 		-o $@ $(TOP)/src/shell.c libsqlcipher.la \
+-		$(LIBREADLINE) $(TLIBS) -rpath "$(libdir)"
++		$(LIBREADLINE) -rpath "$(libdir)"
+ 
+ sqldiff$(TEXE):	$(TOP)/tool/sqldiff.c sqlite3.lo sqlite3.h
+ 	$(LTLINK) -o $@ $(TOP)/tool/sqldiff.c sqlite3.lo $(TLIBS)

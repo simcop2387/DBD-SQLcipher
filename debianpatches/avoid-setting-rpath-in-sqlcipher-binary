@@ -1,0 +1,13 @@
+Index: debian-sqlcipher/Makefile.in
+===================================================================
+--- debian-sqlcipher.orig/Makefile.in
++++ debian-sqlcipher/Makefile.in
+@@ -613,7 +613,7 @@ libtclsqlite3.la:	tclsqlite.lo libsqlcip
+ sqlcipher$(TEXE):	$(TOP)/src/shell.c libsqlcipher.la sqlite3.h
+ 	$(LTLINK) $(READLINE_FLAGS) $(SHELL_OPT) \
+ 		-o $@ $(TOP)/src/shell.c libsqlcipher.la \
+-		$(LIBREADLINE) -rpath "$(libdir)"
++		$(LIBREADLINE)
+ 
+ sqldiff$(TEXE):	$(TOP)/tool/sqldiff.c sqlite3.lo sqlite3.h
+ 	$(LTLINK) -o $@ $(TOP)/tool/sqldiff.c sqlite3.lo $(TLIBS)

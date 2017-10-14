@@ -1,0 +1,12 @@
+--- a/src/ctime.c
++++ b/src/ctime.c
+@@ -158,6 +158,9 @@
+ #if HAVE_ISNAN || SQLITE_HAVE_ISNAN
+   "HAVE_ISNAN",
+ #endif
++#if HAVE_USLEEP
++  "HAVE_USLEEP",
++#endif
+ #if SQLITE_HOMEGROWN_RECURSIVE_MUTEX
+   "HOMEGROWN_RECURSIVE_MUTEX",
+ #endif

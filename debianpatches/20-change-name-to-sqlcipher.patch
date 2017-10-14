@@ -1,0 +1,38 @@
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -95,6 +95,7 @@
+ VERSION = @VERSION@
+ VERSION_NUMBER = @VERSION_NUMBER@
+ RELEASE = @RELEASE@
++SQLCIPHER_VERSION = @SQLCIPHER_VERSION@
+ 
+ # Filename extensions
+ #
+--- /dev/null
++++ b/VERSION_SQLCIPHER
+@@ -0,0 +1 @@
++3.4.1
+--- a/configure.ac
++++ b/configure.ac
+@@ -160,6 +160,10 @@
+ AC_MSG_NOTICE(Version number set to $VERSION_NUMBER)
+ AC_SUBST(VERSION_NUMBER)
+ 
++SQLCIPHER_VERSION=[`cat $srcdir/VERSION_SQLCIPHER | sed 's/^\([0-9]*\.*[0-9]*\).*/\1/'`]
++AC_MSG_NOTICE(SQLCipher Version set to $SQLCIPHER_VERSION)
++AC_SUBST(SQLCIPHER_VERSION)
++
+ #########
+ # Locate a compiler for the build machine.  This compiler should
+ # generate command-line programs that run on the build machine.
+--- a/sqlcipher.pc.in
++++ b/sqlcipher.pc.in
+@@ -7,7 +7,7 @@
+ 
+ Name: SQLCipher
+ Description: SQL database engine
+-Version: @PACKAGE_VERSION@
++Version: @SQLCIPHER_VERSION@
+ Libs: -L${libdir} -lsqlcipher
+ Libs.private: @LIBS@
+ Cflags: -I${includedir}/sqlcipher
