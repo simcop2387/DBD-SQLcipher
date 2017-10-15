@@ -1,0 +1,166 @@
+diff --git a/lib/DBD/SQLcipher.pm b/lib/DBD/SQLcipher.pm
+index 273ccb5..14effc2 100644
+--- a/lib/DBD/SQLcipher.pm
++++ b/lib/DBD/SQLcipher.pm
+@@ -935,16 +935,27 @@ DBD::SQLcipher - Self-contained RDBMS in a DBI Driver
+ 
+ =head1 DESCRIPTION
+ 
++This is an automatically generated fork of DBD::SQLite to use a fork
++called SQLcipher instead of SQLite.
++
++The primary difference between the forks is that SQLcipher implements
++encryption for the databases.  Most of the code here was written by 
++the authors of DBD::SQLite, and has been mechanically altered to call
++itself DBD::SQLcipher instead.
++
++SQLcipher is an open source and commercial fork of SQLite that you can
++find at L<https://www.zetetic.net/sqlcipher/>
++
+ SQLite is a public domain file-based relational database engine that
+ you can find at L<http://www.sqlite.org/>.
+ 
+-B<DBD::SQLcipher> is a Perl DBI driver for SQLite, that includes
++B<DBD::SQLcipher> is a Perl DBI driver for SQLcipher that includes
+ the entire thing in the distribution.
+ So in order to get a fast transaction capable RDBMS working for your
+ perl project you simply have to install this module, and B<nothing>
+ else.
+ 
+-SQLite supports the following features:
++SQLite and SQLcipher support the following features:
+ 
+ =over 4
+ 
+@@ -974,11 +985,40 @@ on how to use DBI itself. The API works like every DBI module does.
+ However, currently many statement attributes are not implemented or
+ are limited by the typeless nature of the SQLite database.
+ 
+-=head1 SQLITE VERSION
++=head1 SQLcipher Encryption
++
++To specify an encryption passphrase for the database via the SQL interface you
++use a pragma. The passphrase you enter is passed through PBKDF2 key derivation
++to obtain the encryption key for the database
++
++    PRAGMA key = 'passphrase';
++
++Alternately, you can specify an exact byte sequence using a blob literal. If you
++use this method it is your responsibility to ensure that the data you provide a
++64 character hex string, which will be converted directly to 32 bytes (256 bits)
++of key data without key derivation.
++
++    PRAGMA key = "x'2DD29CA851E7B56E4697B0E1F08507293D761A05CE4D1B628663F411A8086D99'";
++
++PRAGMA key should be called as the first operation when a database is open.
++
++=head2 Changing a key
++
++To change the encryption passphrase for an existing database you may use the
++rekey pragma after you've supplied the correct database password
++
++    PRAGMA key = 'passphrase'; -- start with the existing database passphrase
++    PRAGMA rekey = 'new-passphrase'; -- rekey will reencrypt with the new passphrase
++
++The hex rekey pragma may be used to rekey to a specific binary value
++
++    PRAGMA rekey = "x'2DD29CA851E7B56E4697B0E1F08507293D761A05CE4D1B628663F411A8086D99'";
++
++=head1 SQLcipher VERSION
+ 
+-DBD::SQLcipher is usually compiled with a bundled SQLite library
+-(SQLite version S<3.20.1> as of this release) for consistency.
+-However, a different version of SQLite may sometimes be used for
++DBD::SQLcipher is usually compiled with a bundled SQLcipher library
++(SQLcipher version S<3.4.1> as of this release) for consistency.
++However, a different version of SQLcipher may sometimes be used for
+ some reasons like security, or some new experimental features.
+ 
+ You can look at C<$DBD::SQLcipher::sqlite_version> (C<3.x.y> format) or
+@@ -993,9 +1033,9 @@ C<DBD::SQLcipher::compile_options()> (see below).
+ 
+ =head2 Database Name Is A File Name
+ 
+-SQLite creates a file per a database. You should pass the C<path> of
+-the database file (with or without a parent directory) in the DBI
+-connection string (as a database C<name>):
++SQLcipher, like SQLite, creates a file per a database. You should 
++pass the C<path> of the database file (with or without a parent 
++directory) in the DBI connection string (as a database C<name>):
+ 
+   my $dbh = DBI->connect("dbi:SQLcipher:dbname=$dbfile","","");
+ 
+@@ -1003,7 +1043,7 @@ The file is opened in read/write mode, and will be created if
+ it does not exist yet.
+ 
+ Although the database is stored in a single file, the directory
+-containing the database file must be writable by SQLite because the
++containing the database file must be writable by SQLcipher because the
+ library will create several temporary files there.
+ 
+ If the filename C<$dbfile> is ":memory:", then a private, temporary
+@@ -1011,7 +1051,7 @@ in-memory database is created for the connection. This in-memory
+ database will vanish when the database connection is closed.
+ It is handy for your library tests.
+ 
+-Note that future versions of SQLite might make use of additional
++Note that future versions of SQLcipher might make use of additional
+ special filenames that begin with the ":" character. It is recommended
+ that when a database filename actually does begin with a ":" character
+ you should prefix the filename with a pathname such as "./" to avoid
+@@ -1026,7 +1066,7 @@ as well for finer control:
+ 
+   my $dbh = DBI->connect("dbi:SQLcipher:uri=file:$path_to_dbfile?mode=rwc");
+ 
+-Note that this is not for remote SQLite database connection. You can
++Note that this is not for remote SQLcipher database connection. You can
+ only connect to a local database.
+ 
+ =head2 Read-Only Database
+@@ -1049,7 +1089,7 @@ you can hide by turning C<PrintWarn> off).
+ =head2 DBD::SQLcipher And File::Temp
+ 
+ When you use L<File::Temp> to create a temporary file/directory for
+-SQLite databases, you need to remember:
++SQLcipher databases, you need to remember:
+ 
+ =over 4
+ 
+@@ -1084,7 +1124,7 @@ Follow the advice in the SQLite FAQ (L<https://sqlite.org/faq.html>).
+ 
+ =over 4
+ 
+-Under Unix, you should not carry an open SQLite database across
++Under Unix, you should not carry an open SQLcipher database across
+ a fork() system call into the child process. Problems will result
+ if you do.
+ 
+@@ -1099,7 +1139,7 @@ You might also want to tweak C<sqlite_busy_timeout> and
+ C<sqlite_use_immediate_transaction> (see below), depending
+ on your needs.
+ 
+-If you need a higher level of concurrency than SQLite supports,
++If you need a higher level of concurrency than SQLcipher supports,
+ consider using other client/server database engines.
+ 
+ =head2 Accessing A Database With Other Tools
+@@ -1111,8 +1151,8 @@ which comes with the L<DBI::Shell> module. Just type:
+ 
+ On the command line to access the file F<foo.db>.
+ 
+-Alternatively you can install SQLite from the link above without
+-conflicting with B<DBD::SQLcipher> and use the supplied C<sqlite3>
++Alternatively you can install SQLcipher from the link above without
++conflicting with B<DBD::SQLcipher> and use the supplied C<sqlcipher>
+ command line tool.
+ 
+ =head2 Blobs
+@@ -1226,7 +1266,7 @@ bind values with no explicit type.
+ 
+ =head2 Placeholders
+ 
+-SQLite supports several placeholder expressions, including C<?>
++SQLite, and therefor SQLcipher, supports several placeholder expressions, including C<?>
+ and C<:AAAA>. Consult the L<DBI> and SQLite documentation for
+ details. 
+ 

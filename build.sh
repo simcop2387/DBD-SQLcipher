@@ -56,6 +56,11 @@ popd
 # Try to actually build and test
 
 pushd build/
+
+for patch in ../after_patches/*.patch; do
+  patch -p1 -F30 < $patch
+done
+
 perl Makefile.PL
 make
 make test
