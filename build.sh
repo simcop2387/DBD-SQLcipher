@@ -29,6 +29,7 @@ find ./lib -type f -iname \*sqlite\* -exec rename 's/SQLite/SQLcipher/g; s/sqlit
 mv lib/DBD/SQLite lib/DBD/SQLcipher
 mv SQLite.xs SQLcipher.xs
 perl -i -pE 's/SQLite.xsi/SQLcipher.xsi/g;' SQLcipher.xs
+perl -i -pE 's/.travis.yml\n//g; s/SQLite.xs/SQLcipher.xs/g' MANIFEST
 
 popd
 
@@ -57,3 +58,4 @@ pushd build/
 perl Makefile.PL
 make
 make test
+make dist
