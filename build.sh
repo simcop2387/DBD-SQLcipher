@@ -3,13 +3,23 @@
 set -e
 set -u
 
+: ${DBD_SQLITE_BRANCH:=master}
+: ${SQLCIPHER_BRANCH:=master}
+
+if [ -z ${BUILD_NUMBER+x} ]; then
+  export BUILD_NUMBER
+fi
+
+read MODULE_VERSION < VERSION
+export MODULE_VERSION
+
 # Clear the build area
 rm -rf build/
 mkdir build/
 
 # Prep the DBD-SQLite repo
 pushd DBD-SQLite
-git checkout master # TODO make env variable
+git checkout $DBD_SQLITE_BRANCH
 git clean -f -x
 git reset --hard HEAD
 git pull
@@ -30,14 +40,14 @@ mv lib/DBD/SQLite lib/DBD/SQLcipher
 mv SQLite.xs SQLcipher.xs
 perl -i -pE 's/SQLite.xsi/SQLcipher.xsi/g;' SQLcipher.xs
 perl -i -pE 's/.travis.yml\n//g; s/SQLite.xs/SQLcipher.xs/g' MANIFEST
-find ./ -iname \*.pm -exec perl -i -pE 's|our\s*\$VERSION\s*=\s*[^;]+;|our \$VERSION = "0.010_01";|;' {} + # TODO this needs to be handled somehow else
+find ./ -iname \*.pm -exec perl -i -p ../rewriteversion.pl {} + # TODO this needs to be handled somehow else
  	
 popd
 
 
 # Prep and configure the sqlcipher repo
 pushd sqlcipher
-git checkout master # TODO make env variable
+git checkout $SQLCIPHER_BRANCH
 git clean -f -x
 git reset --hard HEAD
 git pull
