@@ -43,4 +43,4 @@ SCOPE: {
 
 is( $dbh->do("delete from f where f1='test'"), 3 );
 
-#ok( $dbh->do("PRAMGA rekey = 'too many secrets';"));
+ok( $dbh->do("PRAGMA rekey = 'too many secrets';"));
