@@ -41,6 +41,8 @@ mv SQLite.xs SQLcipher.xs
 perl -i -pE 's/SQLite.xsi/SQLcipher.xsi/g;' SQLcipher.xs
 perl -i -pE 's/.travis.yml\n//g; s/SQLite.xs/SQLcipher.xs/g' MANIFEST
 find ./ -iname \*.pm -exec perl -i -p ../rewriteversion.pl {} + # TODO this needs to be handled somehow else
+
+cp -avx ../t/* t
  	
 popd
 
