@@ -34,7 +34,7 @@ for patch in ../patches/*.patch; do
 	patch -p1 -F10 < $patch
 done
 
-find ./ \( -name MANIFEST -or -name constants.inc -or -iname \*.pm -or -iname \*.pl -or -iname \*.pod -or -iname \*.t -or -iname \*.xs \) -exec perl -pi -E 's{DBD(::|-|/)SQLite}{DBD$1SQLcipher}g; s/dbi:SQLite/dbi:SQLcipher/g' {} +
+find ./ \( -name MANIFEST -or -name constants.inc -or -iname \*.pm -or -iname \*.pl -or -iname \*.pod -or -iname \*.t -or -iname \*.xs \) -exec perl -pi -E 's{DBD(::|-|/)SQLite}{DBD$1SQLcipher}g; s/dbi:SQLite/dbi:SQLcipher/g; s/DBI:SQLite/DBI:SQLcipher/g' {} +
 find ./lib -type f -iname \*sqlite\* -exec rename 's/SQLite/SQLcipher/g; s/sqlite/sqlcipher/g;' {} \;
 mv lib/DBD/SQLite lib/DBD/SQLcipher
 mv SQLite.xs SQLcipher.xs
