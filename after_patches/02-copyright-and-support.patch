@@ -1,0 +1,82 @@
+diff --git a/lib/DBD/SQLcipher.pm b/lib/DBD/SQLcipher.pm
+index 80a1634..13909b7 100644
+--- a/lib/DBD/SQLcipher.pm
++++ b/lib/DBD/SQLcipher.pm
+@@ -2588,24 +2588,51 @@ on a specific need, such as querying for overlapping circles.
+ 
+ =head1 SUPPORT
+ 
+-Bugs should be reported via the CPAN bug tracker at
++Bugs should be reported as github issues or emailed to L<simcop@cpan.org>
+ 
+ L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=DBD-SQLcipher>
+ 
++Note that bugs of the bundled SQLcipher library should be reported to
++L<https://github.com/sqlcipher/sqlcipher>.  If you need help in determining
++where a bug's responsibility lies contact L<simcop@cpan.org>
++
+ Note that bugs of bundled SQLite library (i.e. bugs in C<sqlite3.[ch]>)
+ should be reported to the SQLite developers at sqlite.org via their bug
+ tracker or via their mailing list.
+ 
++Live support may be available on IRC from simcop2387, and possibly others,
++on the following networks:
++
++- freenode #perl
++
++- irc.perl.net #perl-help
++
++- oftc #perl
++
+ The master repository is on GitHub:
+ 
+-L<https://github.com/DBD-SQLcipher/DBD-SQLcipher>.
++L<https://github.com/simcop2387/DBD-SQLcipher>.
+ 
+-We also have a mailing list:
++DBD::SQlite also has a mailing list, information there should be 
++relavent, but encryption is specific to DBD::SQLcipher
+ 
+ L<http://lists.scsys.co.uk/cgi-bin/mailman/listinfo/dbd-sqlite>
+ 
+ =head1 AUTHORS
+ 
++Ryan Voots E<lt>simcop@cpan.orgE<gt>
++
++Inspired by the original port done by Tiago Espinha Gasiba (TGASIBA) 
++
++=head1 COPYRIGHT
++
++The bundled SQLcipher code in this distribution is owned by either the original
++SQLite developers or Zetetic LLC under a BSD style license, L<https://www.zetetic.net/sqlcipher/license>
++
++The changes to switch L<DBD::SQLite> to use this library are owned by Ryan Voots.
++
++=head1 DBD::SQLITE AUTHORS
++
+ Matt Sergeant E<lt>matt@sergeant.orgE<gt>
+ 
+ Francis J. Lacoste E<lt>flacoste@logreport.orgE<gt>
+@@ -2620,11 +2645,11 @@ Laurent Dami E<lt>dami@cpan.orgE<gt>
+ 
+ Kenichi Ishigaki E<lt>ishigaki@cpan.orgE<gt>
+ 
+-=head1 COPYRIGHT
++=head1 DBD::SQLITE COPYRIGHT
+ 
+ The bundled SQLite code in this distribution is Public Domain.
+ 
+-DBD::SQLcipher is copyright 2002 - 2007 Matt Sergeant.
++DBD::SQLite is copyright 2002 - 2007 Matt Sergeant.
+ 
+ Some parts copyright 2008 Francis J. Lacoste.
+ 
+@@ -2634,7 +2659,7 @@ Some parts copyright 2008 - 2013 Adam Kennedy.
+ 
+ Some parts copyright 2009 - 2013 Kenichi Ishigaki.
+ 
+-Some parts derived from L<DBD::SQLcipher::Amalgamation>
++Some parts derived from L<DBD::SQLite::Amalgamation>
+ copyright 2008 Audrey Tang.
+ 
+ This program is free software; you can redistribute
