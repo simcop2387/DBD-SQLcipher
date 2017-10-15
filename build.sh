@@ -30,7 +30,8 @@ mv lib/DBD/SQLite lib/DBD/SQLcipher
 mv SQLite.xs SQLcipher.xs
 perl -i -pE 's/SQLite.xsi/SQLcipher.xsi/g;' SQLcipher.xs
 perl -i -pE 's/.travis.yml\n//g; s/SQLite.xs/SQLcipher.xs/g' MANIFEST
-
+find ./ -iname \*.pm -exec perl -i -pE 's|our\s*\$VERSION\s*=\s*[^;]+;|our \$VERSION = "0.010_01";|;' {} + # TODO this needs to be handled somehow else
+ 	
 popd
 
 

@@ -1,0 +1,28 @@
+diff --git a/Makefile.PL b/Makefile.PL
+index 9cb81f6..95b8531 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -322,9 +322,9 @@ $CC_OPTIONS{LDDLFLAGS} = join ' ', $Config{lddlflags}, @LDDLFLAGS if @LDDLFLAGS;
+ 
+ WriteMakefile(
+ 	NAME             => 'DBD::SQLite',
+-	ABSTRACT         => 'Self Contained SQLite RDBMS in a DBI Driver',
++	ABSTRACT         => 'Self Contained SQLcipher (an SQLite fork) RDBMS in a DBI Driver',
+ 	VERSION_FROM     => 'lib/DBD/SQLite.pm',
+-	AUTHOR           => 'Adam Kennedy <adamk@cpan.org>',
++	AUTHOR           => 'Ryan Voots <simcop@cpan.org>',
+ 	# Release manager (can this be an array?)
+ 	PREREQ_PM        => {
+ 		'Tie::Hash'     => 0,
+@@ -376,9 +376,8 @@ WriteMakefile(
+ 			},
+ 			resources => {
+ 				license     => 'http://dev.perl.org/licenses/',
+-				bugtracker  => 'http://rt.cpan.org/Public/Dist/Display.html?Name=DBD-SQLite',
+-				repository  => 'https://github.com/DBD-SQLite/DBD-SQLite',
+-				MailingList => 'http://lists.scsys.co.uk/cgi-bin/mailman/listinfo/dbd-sqlite',
++				bugtracker  => 'https://github.com/simcop2387/DBD-SQLcipher/issues',
++				repository  => 'https://github.com/simcop2387/DBD-SQLcipher',
+ 			},
+ 			no_index => {
+ 				directory => [ qw{
