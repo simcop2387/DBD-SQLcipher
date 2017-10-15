@@ -26,7 +26,7 @@ git pull
 popd
 
 # Prep the build area
-rsync -vax DBD-SQLite/* build/
+cp -vax DBD-SQLite/* build/
 
 pushd build
 for patch in ../patches/*.patch; do
