@@ -19,10 +19,11 @@ mkdir build/
 
 # Prep the DBD-SQLite repo
 pushd DBD-SQLite
+git fetch --all
 git checkout $DBD_SQLITE_BRANCH
 git clean -f -x
 git reset --hard HEAD
-git pull
+git pull || echo Not on branch
 popd
 
 # Prep the build area
@@ -49,10 +50,11 @@ popd
 
 # Prep and configure the sqlcipher repo
 pushd sqlcipher
+git fetch --all
 git checkout $SQLCIPHER_BRANCH
 git clean -f -x
 git reset --hard HEAD
-git pull
+git pull || echo Not on branch
 
 patch -p1 < ../debianpatches/20-change-name-to-sqlcipher.patch
 patch -p1 < ../debianpatches/33-add-have-usleep.patch
