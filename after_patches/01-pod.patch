@@ -69,10 +69,10 @@ index 273ccb5..14effc2 100644
 +=head1 SQLcipher VERSION
  
 -DBD::SQLcipher is usually compiled with a bundled SQLite library
--(SQLite version S<3.20.1> as of this release) for consistency.
+-(SQLite version S<3.25.2> as of this release) for consistency.
 -However, a different version of SQLite may sometimes be used for
 +DBD::SQLcipher is usually compiled with a bundled SQLcipher library
-+(SQLcipher version S<3.4.1> as of this release) for consistency.
++(SQLcipher version S<3.4.2> as of this release) for consistency.
 +However, a different version of SQLcipher may sometimes be used for
  some reasons like security, or some new experimental features.
  
