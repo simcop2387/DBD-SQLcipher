@@ -38,7 +38,7 @@ done
 find ./ \( -name MANIFEST -or -name constants.inc -or -iname \*.pm -or -iname \*.pl -or -iname \*.pod -or -iname \*.t -or -iname \*.xs \) -exec perl -pi -E 's{DBD(::|-|/)SQLite}{DBD$1SQLcipher}g; s/dbi:SQLite/dbi:SQLcipher/g; s/DBI:SQLite/DBI:SQLcipher/g' {} +
 find ./lib -type f -iname \*sqlite\* -exec rename 's/SQLite/SQLcipher/g; s/sqlite/sqlcipher/g;' {} \;
 mv lib/DBD/SQLite lib/DBD/SQLcipher
-mv lib/DBD/SQLite.pm lib/DBD/SQLcipher.pm
+mv lib/DBD/SQLite.pm lib/DBD/SQLcipher.pm || ls lib/DBD/
 mv SQLite.xs SQLcipher.xs
 perl -i -pE 's/SQLite.xsi/SQLcipher.xsi/g;' SQLcipher.xs
 perl -i -pE 's/.travis.yml\n//g; s/SQLite.xs/SQLcipher.xs/g' MANIFEST
